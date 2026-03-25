@@ -231,8 +231,10 @@ def _call_groq(user_query: str, api_key: str) -> str:
 
 def _call_gemini(user_query: str, api_key: str) -> str:
     """Call Google Gemini (generativelanguage) API."""
+    # Using 1.5-flash for better stability in production
+    model = "gemini-1.5-flash"
     response = httpx.post(
-        f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}",
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}",
         headers={"Content-Type": "application/json"},
         json={
             "contents": [
@@ -360,8 +362,9 @@ def generate_sql(query: str) -> dict:
         else:
             raw = _call_gemini(query, api_key)
     except httpx.HTTPStatusError as e:
-        logger.error("LLM API error: %s", e)
-        return {"sql": None, "error": f"LLM API error: {e.response.status_code}"}
+        error_body = e.response.text
+        logger.error("LLM API error (status %s): %s", e.response.status_code, error_body)
+        return {"sql": None, "error": f"LLM API error: {e.response.status_code}. Detail: {error_body[:100]}"}
     except Exception as e:
         logger.error("LLM call failed: %s", e)
         return {"sql": None, "error": f"LLM call failed: {str(e)}"}

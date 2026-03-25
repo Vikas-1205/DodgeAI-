@@ -87,8 +87,10 @@ def _call_groq(system_prompt: str, user_message: str, api_key: str) -> str:
 
 
 def _call_gemini(system_prompt: str, user_message: str, api_key: str) -> str:
+    # Using 1.5-flash for better stability in production
+    model = "gemini-1.5-flash"
     response = httpx.post(
-        f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}",
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}",
         headers={"Content-Type": "application/json"},
         json={
             "contents": [
@@ -210,8 +212,9 @@ def generate_answer(
         return {"response": None, "error": str(e)}
 
     except httpx.HTTPStatusError as e:
-        logger.error("LLM API error: %s", e)
-        return {"response": None, "error": f"LLM API error: {e.response.status_code}"}
+        error_body = e.response.text
+        logger.error("LLM API error (status %s): %s", e.response.status_code, error_body)
+        return {"response": None, "error": f"LLM API error: {e.response.status_code}. Detail: {error_body[:100]}"}
 
     except Exception as e:
         logger.error("Answer generation failed: %s", e)
