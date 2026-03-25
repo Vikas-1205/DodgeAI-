@@ -1,0 +1,17 @@
+id,customer_id,address_type,street,city,country
+A_B_310000108,310000108,billing,123 Main,SAP City,Germany
+A_S_310000108,310000108,shipping,123 Main,SAP City,Germany
+A_B_310000109,310000109,billing,123 Main,SAP City,Germany
+A_S_310000109,310000109,shipping,123 Main,SAP City,Germany
+A_B_320000082,320000082,billing,123 Main,SAP City,Germany
+A_S_320000082,320000082,shipping,123 Main,SAP City,Germany
+A_B_320000083,320000083,billing,123 Main,SAP City,Germany
+A_S_320000083,320000083,shipping,123 Main,SAP City,Germany
+A_B_320000085,320000085,billing,123 Main,SAP City,Germany
+A_S_320000085,320000085,shipping,123 Main,SAP City,Germany
+A_B_320000088,320000088,billing,123 Main,SAP City,Germany
+A_S_320000088,320000088,shipping,123 Main,SAP City,Germany
+A_B_320000107,320000107,billing,123 Main,SAP City,Germany
+A_S_320000107,320000107,shipping,123 Main,SAP City,Germany
+A_B_320000108,320000108,billing,123 Main,SAP City,Germany
+A_S_320000108,320000108,shipping,123 Main,SAP City,Germany
